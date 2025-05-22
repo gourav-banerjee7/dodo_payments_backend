@@ -1,0 +1,15 @@
+services:
+  test-db:
+    image: postgres:15
+    container_name: dodo_test_db
+    environment:
+      POSTGRES_DB: dodo_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"  # Different port to avoid clash with dev DB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
