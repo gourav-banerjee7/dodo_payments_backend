@@ -215,7 +215,7 @@ DATABASE_URL=postgres://postgres:password@localhost:5433/dodo_test cargo test
 
 ## 🎥 Demo Video
 
-📽️ [Watch the Demo Video](https://your-demo-video-link.com)
+📽️ [Watch the Demo Video](https://screenrec.com/share/Znyc6poW2X)
 
 Includes:
 
