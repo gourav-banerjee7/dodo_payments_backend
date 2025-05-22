@@ -66,21 +66,163 @@ Use Postman or `curl` to test endpoints.
 
 ---
 
+## 📚 API Documentation
+
+### 🔗 Base URL
+
+```
+http://localhost:3000
+```
+
+### 📖 Endpoints
+
+#### POST `/register`
+
+Register a new user.
+
+**Request**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "your_password"
+}
+```
+
+**Response**
+
+```json
+{
+  "id": "uuid",
+  "email": "user@example.com",
+  "created_at": "timestamp"
+}
+```
+
+---
+
+#### POST `/login`
+
+Log in a user and receive a JWT.
+
+**Request**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "your_password"
+}
+```
+
+**Response**
+
+```json
+{
+  "token": "jwt_token"
+}
+```
+
+---
+
+#### POST `/transaction`
+
+Create a new transaction.
+
+**Headers**
+
+```
+Authorization: Bearer <token>
+```
+
+**Request**
+
+```json
+{
+  "amount": 100,
+  "description": "test deposit"
+}
+```
+
+**Response**
+
+```json
+{
+  "id": "uuid",
+  "user_id": "uuid",
+  "amount": 100,
+  "description": "test deposit",
+  "created_at": "timestamp"
+}
+```
+
+---
+
+#### GET `/balance`
+
+Get total balance for the authenticated user.
+
+**Headers**
+
+```
+Authorization: Bearer <token>
+```
+
+**Response**
+
+```json
+{
+  "balance": 500
+}
+```
+
+---
+
 ## 🧪 Run Tests
 
-### 🐳 Run Test Database
+### 1. Start Test Database
 
 ```bash
 docker compose -f docker-compose.test.yaml up -d
+````
+
+This will spin up a PostgreSQL test database on port `5433`.
+
+---
+
+### 2. Run Migrations on Test DB
+
+```bash
+sqlx migrate run --database-url postgres://postgres:password@localhost:5433/dodo_test
 ```
 
-### 🧪 Run Unit/Integration Tests
+Ensure this command is run **from the host machine** and that your `migrations/` folder exists.
 
-Make sure test `.env` is configured, then:
+---
+
+### 3. Run Unit and Integration Tests
 
 ```bash
 cargo test
 ```
+
+Make sure your `.env` file points to the test database (`dodo_test`) before running this, or override via:
+
+```bash
+DATABASE_URL=postgres://postgres:password@localhost:5433/dodo_test cargo test
+```
+
+---
+
+## 🎥 Demo Video
+
+📽️ [Watch the Demo Video](https://your-demo-video-link.com)
+
+Includes:
+
+* User registration and login
+* Creating and listing transactions
+* Auth-based access control
+* Design overview and architecture choices
 
 ---
 
@@ -114,5 +256,16 @@ docker compose down
 ├── .env
 └── README.md
 ```
+
+---
+
+## 🛠 Tech Stack
+
+* **Rust**
+* **Axum** (Web framework)
+* **SQLx** (Async PostgreSQL ORM)
+* **Docker + Docker Compose**
+* **JWT for Authentication**
+* **PostgreSQL**
 
 ---
